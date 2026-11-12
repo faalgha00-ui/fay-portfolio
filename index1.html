@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fay — Graphic Designer</title>
+<link rel="icon" type="image/webp" href="fay-character.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#010736;font-family:'Kanit',sans-serif;-webkit-font-smoothing:antialiased}
+main{overflow-x:clip;background:#010736}
+a{text-decoration:none}
+img,video{display:block}
+.grad{background:linear-gradient(180deg,#646973 0%,#BBCCD7 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+/* fade-in */
+[data-fade]{opacity:0;transition-property:opacity,transform;transition-timing-function:cubic-bezier(.25,.1,.25,1)}
+[data-fade].in{opacity:1;transform:none!important}
+/* hero */
+.hero{position:relative;height:100vh;height:100svh;display:flex;flex-direction:column;overflow-x:clip}
+.nav{position:relative;z-index:20;display:flex;justify-content:space-between;padding:24px 24px 0}
+.nav a{color:#D7E2EA;font-weight:500;text-transform:uppercase;letter-spacing:.05em;font-size:.875rem;transition:opacity .2s}
+.nav a:hover{opacity:.7}
+.hwrap{position:relative;z-index:0;overflow:hidden}
+.hero h1{font-weight:900;text-transform:uppercase;letter-spacing:-.025em;line-height:1;white-space:nowrap;width:100%;text-align:center;font-size:14vw;margin-top:24px}
+.char{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10;width:280px;pointer-events:none}
+.char img{width:100%;height:auto;object-fit:contain;user-select:none}
+.magnet{will-change:transform}
+.hbar{position:relative;z-index:20;margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;padding:0 24px 28px}
+.hbar p{color:#D7E2EA;font-weight:300;text-transform:uppercase;letter-spacing:.05em;line-height:1.25;font-size:clamp(.75rem,1.4vw,1.5rem);max-width:160px}
+.cbtn{display:inline-block;border-radius:9999px;color:#fff;font-weight:500;text-transform:uppercase;letter-spacing:.05em;padding:12px 32px;font-size:.75rem;background:linear-gradient(123deg,#18011F 7%,#B600A8 37%,#7621B0 72%,#BE4C00 100%);box-shadow:0 4px 4px rgba(181,1,167,.25),4px 4px 12px #7721B1 inset;outline:2px solid #fff;outline-offset:-3px;transition:transform .2s}
+.cbtn:hover{transform:scale(1.03)}
+/* marquee */
+.marquee{background:#0C0C0C;padding:96px 0 40px;overflow:hidden}
+.rows{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;gap:12px;width:max-content;will-change:transform}
+.row img{width:420px;height:270px;border-radius:16px;object-fit:cover;flex-shrink:0}
+/* about */
+.about{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#010736;padding:80px 20px;overflow:hidden}
+.ab-in{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;gap:64px}
+.ab-top{display:flex;flex-direction:column;align-items:center;gap:40px}
+.h2{font-weight:900;text-transform:uppercase;text-align:center;letter-spacing:-.025em;line-height:1;font-size:clamp(3rem,12vw,160px)}
+.atext{color:#D7E2EA;font-weight:500;text-align:center;line-height:1.625;max-width:560px;font-size:clamp(1rem,2vw,1.35rem)}
+.atext .w{display:inline-block;white-space:nowrap}
+.atext .c{position:relative}
+.atext .c .ph{opacity:0}
+.atext .c .an{position:absolute;left:0;top:0;opacity:.2}
+.deco{position:absolute;pointer-events:none;border-radius:50%;filter:blur(.3px)}
+/* services */
+.services{background:#fff;border-radius:40px 40px 0 0;padding:80px 20px}
+.services .h2{color:#0C0C0C;margin-bottom:64px}
+.slist{max-width:64rem;margin:0 auto}
+.sitem{display:flex;align-items:flex-start;gap:24px;padding:32px 0;border-bottom:1px solid rgba(12,12,12,.15)}
+.sitem:first-child{border-top:1px solid rgba(12,12,12,.15)}
+.snum{font-weight:900;line-height:1;color:#0C0C0C;flex-shrink:0;font-size:clamp(3rem,10vw,140px)}
+.sbody{display:flex;flex-direction:column;gap:8px;padding-top:4px}
+.sbody h3{font-weight:500;text-transform:uppercase;color:#0C0C0C;font-size:clamp(1rem,2.2vw,2.1rem)}
+.sbody p{font-weight:300;line-height:1.625;max-width:42rem;color:#0C0C0C;opacity:.6;font-size:clamp(.85rem,1.6vw,1.25rem)}
+/* projects */
+.projects{position:relative;z-index:10;background:#0C0C0C;border-radius:40px 40px 0 0;margin-top:-40px;padding:80px 16px 80px}
+.projects .h2{margin-bottom:48px}
+.cards{max-width:80rem;margin:0 auto}
+.cwrap{height:85vh;position:sticky;top:96px}
+.card{position:relative;background:#0C0C0C;padding:16px;border-radius:40px;border:2px solid #D7E2EA;transform-origin:top center;will-change:transform}
+.ctop{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;padding:0 8px}
+.cl{display:flex;align-items:center;gap:16px;min-width:0;flex:1 1 320px}
+.cnum{font-weight:900;line-height:1;flex-shrink:0;font-size:clamp(2.5rem,7vw,100px)}
+.cmeta{display:flex;flex-direction:column;gap:4px;min-width:0}
+.ccat{color:#D7E2EA;font-weight:300;text-transform:uppercase;letter-spacing:.05em;opacity:.6;font-size:.75rem}
+.cname{color:#D7E2EA;font-weight:500;text-transform:uppercase;line-height:1.25;font-size:clamp(1rem,2.2vw,2.1rem)}
+.cdesc{color:#D7E2EA;font-weight:300;line-height:1.6;opacity:.6;max-width:42rem;font-size:clamp(.8rem,1.2vw,1rem)}
+.lbtn{display:inline-flex;align-items:center;gap:8px;border-radius:9999px;border:2px solid #D7E2EA;color:#D7E2EA;font-weight:500;text-transform:uppercase;letter-spacing:.05em;padding:12px 32px;font-size:.875rem;white-space:nowrap;transition:background .2s}
+.lbtn:hover{background:rgba(215,226,234,.1)}
+.grid{display:flex;gap:12px}
+.gl{display:flex;flex-direction:column;gap:12px;width:40%}
+.gr{width:60%}
+.m{width:100%;border-radius:40px;object-fit:cover}
+.t1{height:clamp(130px,16vw,230px)}
+.t2{height:clamp(160px,22vw,340px)}
+.tt{height:calc(clamp(130px,16vw,230px) + clamp(160px,22vw,340px) + 12px)}
+@media(min-width:640px){
+ .hero h1{font-size:15vw;margin-top:16px}
+ .char{width:360px;top:auto;bottom:0;transform:translateX(-50%)}
+ .hbar{padding-bottom:32px}.hbar p{max-width:220px}
+ .cbtn{padding:14px 40px;font-size:.875rem}
+ .marquee{padding-top:128px}
+ .about{padding:80px 32px}.ab-in{gap:80px}.ab-top{gap:56px}
+ .services{border-radius:50px 50px 0 0;padding:96px 32px}.services .h2{margin-bottom:80px}
+ .sitem{gap:40px;padding:40px 0}.sbody{gap:12px;padding-top:12px}
+ .projects{border-radius:50px 50px 0 0;margin-top:-48px;padding:96px 32px 80px}.projects .h2{margin-bottom:64px}
+ .card{padding:24px;border-radius:50px}.m{border-radius:50px}
+ .ccat{font-size:.875rem}.lbtn{padding:14px 40px;font-size:1rem}.cl{gap:24px}.ctop{gap:24px;margin-bottom:24px;padding:0 16px}
+}
+@media(min-width:768px){
+ .nav{padding:32px 40px 0}.nav a{font-size:1.125rem}
+ .hero h1{font-size:16vw;margin-top:-20px}
+ .char{width:440px}
+ .hbar{padding:0 40px 40px}.hbar p{max-width:260px}
+ .cbtn{padding:16px 48px;font-size:1rem}
+ .marquee{padding-top:160px}
+ .about{padding:80px 40px}.ab-in{gap:96px}.ab-top{gap:64px}
+ .services{border-radius:60px 60px 0 0;padding:128px 40px}.services .h2{margin-bottom:112px}
+ .sitem{gap:56px;padding:48px 0}
+ .projects{border-radius:60px 60px 0 0;margin-top:-56px;padding:128px 40px 80px}.projects .h2{margin-bottom:80px}
+ .cwrap{top:128px}
+ .card{padding:32px;border-radius:60px}.m{border-radius:60px}.cl{gap:32px}.ctop{margin-bottom:32px}
+}
+@media(min-width:1024px){
+ .nav a{font-size:1.4rem}
+ .hero h1{font-size:17.5vw}
+ .char{width:520px}
+}
+</style>
+</head>
+<body>
+<main>
+<section class="hero">
+  <nav class="nav" data-fade data-delay="0" data-y="-20">
+    <a href="#about">About</a><a href="#services">Price</a><a href="#projects">Projects</a><a href="#contact">Contact</a>
+  </nav>
+  <div class="hwrap"><h1 class="grad" data-fade data-delay="0.15" data-y="40">Hi, i'm fay</h1></div>
+  <div class="char"><div data-fade data-delay="0.6" data-y="30"><div class="magnet" id="magnet"><img src="fay-character.webp" alt="Fay — 3D character portrait" draggable="false"></div></div></div>
+  <div class="hbar">
+    <p data-fade data-delay="0.35" data-y="20">a graphic designer driven by crafting striking and unforgettable projects</p>
+    <div data-fade data-delay="0.5" data-y="20"><a class="cbtn" href="mailto:faalgha00@gmail.com">Contact Me</a></div>
+  </div>
+</section>
+
+<section class="marquee" id="marquee"><div class="rows"><div class="row" id="row1"></div><div class="row" id="row2"></div></div></section>
+
+<section class="about" id="about">
+  <div class="ab-in">
+    <div class="ab-top">
+      <h2 class="h2 grad" data-fade data-delay="0" data-y="40">About me</h2>
+      <p class="atext" id="atext">i'm a graphic design student with three years of university projects, from packaging and book design to typography and branding. outside class, i've been drawing digital illustrations for years, and i bring that same passion into every design. Let's build something incredible together!</p>
+    </div>
+    <div id="contact" style="display:flex;flex-direction:column;align-items:center;gap:16px"><a class="cbtn" href="mailto:faalgha00@gmail.com">Contact Me</a><a href="mailto:faalgha00@gmail.com" style="color:#D7E2EA;opacity:.7;font-weight:300;letter-spacing:.05em;font-size:clamp(.85rem,1.4vw,1.1rem)">faalgha00@gmail.com</a></div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <h2 class="h2" data-fade data-y="40">Services</h2>
+  <div class="slist" id="slist"></div>
+</section>
+
+<section class="projects" id="projects">
+  <h2 class="h2 grad" data-fade data-y="40">Project</h2>
+  <div class="cards" id="cards"></div>
+</section>
+</main>
+
+<script>
+const SERVICES=[
+ ["Packaging Design","Creative, functional packaging concepts — from sketches to physical prototypes — including sustainable and reusable designs that extend a product's life."],
+ ["Editorial & Book Design","Book and publication layouts with strong grids, bold typography, and a clear visual rhythm across every spread."],
+ ["Typography","Custom Arabic lettering and type-driven posters that turn letters into the main visual."],
+ ["Branding & Logo Design","Crafting cohesive visual identities — from personal logos to full brand systems — that communicate a clear and memorable presence."],
+ ["Digital Illustration","Expressive digital paintings and character illustrations with dramatic lighting, mood, and color."]];
+const PROJECTS=[
+ {name:"LEGO Star Wars Recyclable Packaging",cat:"University — Packaging Design",desc:"A LEGO Star Wars box redesigned to open into a playable diorama and be reused as a desk organizer instead of being thrown away.",link:"lego-starwars-demo.mp4",
+  i1:{src:"lego-starwars-art.webp",alt:"Space illustration printed inside the LEGO box"},i2:{src:"lego-starwars-1.webp",alt:"Opened LEGO box diorama"},tall:{src:"lego-starwars-demo.mp4",video:true,poster:"lego-starwars-2.webp",alt:"Video demo of the packaging"}},
+ {name:"Built for Speed (خُلقت للسرعة)",cat:"University — Editorial / Book Design",desc:"A 48-page Arabic book about iconic supercars — each car gets a line-art cover page, a profile spread, and its exterior and interior design.",link:"book-speed-tall.webp",
+  i1:{src:"book-speed-1.webp",alt:"Book cover"},i2:{src:"book-speed-2.webp",alt:"Bugatti spread"},tall:{src:"book-speed-tall.webp",alt:"Ferrari spread",pos:"right center"}},
+ {name:"Befriend Your Enemy (صادقي عدوك)",cat:"University — Packaging Design",desc:"A Creeper-inspired Minecraft cube package that hides a playful surprise inside, turning a game's villain into a friendly gift.",link:"minecraft-pack-tall.webp",
+  i1:{src:"minecraft-pack-1.webp",alt:"Minecraft cube package"},i2:{src:"minecraft-pack-2.webp",alt:"Package opened"},tall:{src:"minecraft-pack-tall.webp",alt:"Package with its surprise inside"}},
+ {name:"Minecraft Arabic Font & Personal Logo",cat:"University — Typography & Branding",desc:"A pixel-style Arabic typeface inspired by Minecraft blocks, presented as a poster, plus Fay's personal logo.",link:"minecraft-font-poster-tall.webp",
+  i1:{src:"fay-logo.webp",alt:"Fay Alghamdi personal logo",fit:"contain",bg:"#fff"},i2:{src:"minecraft-font-detail.webp",alt:"Minecraft Arabic font detail"},tall:{src:"minecraft-font-poster-tall.webp",alt:"Minecraft Arabic font poster",pos:"top center"}}];
+
+const pad=n=>String(n).padStart(2,"0");
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+// services
+document.getElementById("slist").innerHTML=SERVICES.map(([n,d],i)=>`<div class="sitem" data-fade data-delay="${i*0.1}"><span class="snum">${pad(i+1)}</span><div class="sbody"><h3>${esc(n)}</h3><p>${esc(d)}</p></div></div>`).join("");
+
+// projects
+const media=(m,cls)=>{const st=`object-fit:${m.fit||"cover"};object-position:${m.pos||"center"};${m.bg?"background:"+m.bg+";":""}`;
+ return m.video?`<video class="m ${cls}" src="${m.src}" poster="${m.poster}" autoplay muted loop playsinline preload="metadata" aria-label="${m.alt}" style="${st}"></video>`
+ :`<img class="m ${cls}" src="${m.src}" alt="${esc(m.alt)}" loading="lazy" style="${st}">`};
+document.getElementById("cards").innerHTML=PROJECTS.map((p,i)=>`<div class="cwrap"><div class="card" style="top:${i*28}px">
+ <div class="ctop"><div class="cl"><span class="cnum grad">${pad(i+1)}</span><div class="cmeta"><span class="ccat">${esc(p.cat)}</span><h3 class="cname">${esc(p.name)}</h3><p class="cdesc">${esc(p.desc)}</p></div></div>
+ <a class="lbtn" href="${p.link}" target="_blank" rel="noopener noreferrer">View Project <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a></div>
+ <div class="grid"><div class="gl">${media(p.i1,"t1")}${media(p.i2,"t2")}</div><div class="gr">${media(p.tall,"tt")}</div></div></div></div>`).join("");
+
+// marquee
+const D=Array.from({length:17},(_,i)=>`drawing-${pad(i+1)}.webp`);
+const fill=(id,arr)=>{document.getElementById(id).innerHTML=[...arr,...arr,...arr].map(s=>`<img src="${s}" alt="Digital illustration by Fay" loading="lazy">`).join("")};
+fill("row1",D.slice(0,9));fill("row2",D.slice(9));
+
+// animated text
+const at=document.getElementById("atext");const txt=at.textContent;const total=txt.length;let k=0;const charEls=[];
+at.innerHTML=txt.split(" ").map((w,wi,ws)=>{const s=w.split("").map(c=>{const idx=k++;return `<span class="c"><span class="ph">${esc(c)}</span><span class="an" data-i="${idx}">${esc(c)}</span></span>`}).join("");k++;return `<span class="w">${s}${wi<ws.length-1?"<span>&nbsp;</span>":""}</span>`}).join("");
+at.querySelectorAll(".an").forEach(e=>charEls.push([e,+e.dataset.i/total]));
+
+// fade-in
+document.querySelectorAll("[data-fade]").forEach(el=>{const d=el.dataset;el.style.transform=`translate(${d.x||0}px,${d.y||30}px)`;el.style.transitionDuration=(d.duration||0.7)+"s";el.style.transitionDelay=(d.delay||0)+"s"});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{rootMargin:"50px",threshold:0});
+document.querySelectorAll("[data-fade]").forEach(el=>io.observe(el));
+
+// magnet
+const mag=document.getElementById("magnet");
+addEventListener("mousemove",e=>{const r=mag.getBoundingClientRect();const dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);
+ if(Math.abs(dx)<r.width/2+150&&Math.abs(dy)<r.height/2+150){mag.style.transition="transform 0.3s ease-out";mag.style.transform=`translate3d(${dx/3}px,${dy/3}px,0)`}
+ else{mag.style.transition="transform 0.6s ease-in-out";mag.style.transform="translate3d(0,0,0)"}},{passive:true});
+document.addEventListener("mouseleave",()=>{mag.style.transition="transform 0.6s ease-in-out";mag.style.transform="translate3d(0,0,0)"});
+
+// scroll-driven
+const mq=document.getElementById("marquee"),r1=document.getElementById("row1"),r2=document.getElementById("row2"),cardsEl=document.getElementById("cards");
+const cards=[...document.querySelectorAll(".card")];
+function onScroll(){const vh=innerHeight;
+ const top=mq.getBoundingClientRect().top+scrollY;const off=(scrollY-top+vh)*0.3;
+ r1.style.transform=`translateX(${off-200}px)`;r2.style.transform=`translateX(${-(off-200)}px)`;
+ const ar=at.getBoundingClientRect();const p=Math.min(1,Math.max(0,(0.8*vh-ar.top)/(ar.height+0.6*vh)));
+ for(const [e,s] of charEls){const t=Math.min(1,Math.max(0,(p-s)*total));e.style.opacity=0.2+0.8*t}
+ const cr=cardsEl.getBoundingClientRect();const cp=Math.min(1,Math.max(0,-cr.top/(cr.height-vh)));const n=cards.length;
+ cards.forEach((c,i)=>{const target=1-(n-1-i)*0.03;const s0=i/n;const t=cp<=s0?0:(cp-s0)/(1-s0);c.style.transform=`scale(${1+(target-1)*t})`});
+}
+addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onScroll);onScroll();
+</script>
+</body>
+</html>
