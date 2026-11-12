@@ -158,14 +158,14 @@ const SERVICES=[
  ["Branding & Logo Design","Crafting cohesive visual identities — from personal logos to full brand systems — that communicate a clear and memorable presence."],
  ["Digital Illustration","Expressive digital paintings and character illustrations with dramatic lighting, mood, and color."]];
 const PROJECTS=[
- {name:"LEGO Star Wars Recyclable Packaging",cat:"University — Packaging Design",desc:"A LEGO Star Wars box redesigned to open into a playable diorama and be reused as a desk organizer instead of being thrown away.",link:"projects/lego-starwars-demo.mp4",
-  i1:{src:"projects/lego-starwars-art.webp",alt:"Space illustration printed inside the LEGO box"},i2:{src:"projects/lego-starwars-1.webp",alt:"Opened LEGO box diorama"},tall:{src:"projects/lego-starwars-demo.mp4",video:true,poster:"projects/lego-starwars-2.webp",alt:"Video demo of the packaging"}},
- {name:"Built for Speed (خُلقت للسرعة)",cat:"University — Editorial / Book Design",desc:"A 48-page Arabic book about iconic supercars — each car gets a line-art cover page, a profile spread, and its exterior and interior design.",link:"projects/book-speed-tall.webp",
-  i1:{src:"projects/book-speed-1.webp",alt:"Book cover"},i2:{src:"projects/book-speed-2.webp",alt:"Bugatti spread"},tall:{src:"projects/book-speed-tall.webp",alt:"Ferrari spread",pos:"right center"}},
- {name:"Befriend Your Enemy (صادقي عدوك)",cat:"University — Packaging Design",desc:"A Creeper-inspired Minecraft cube package that hides a playful surprise inside, turning a game's villain into a friendly gift.",link:"projects/minecraft-pack-tall.webp",
-  i1:{src:"projects/minecraft-pack-1.webp",alt:"Minecraft cube package"},i2:{src:"projects/minecraft-pack-2.webp",alt:"Package opened"},tall:{src:"projects/minecraft-pack-tall.webp",alt:"Package with its surprise inside"}},
- {name:"Minecraft Arabic Font & Personal Logo",cat:"University — Typography & Branding",desc:"A pixel-style Arabic typeface inspired by Minecraft blocks, presented as a poster, plus Fay's personal logo.",link:"projects/minecraft-font-poster-tall.webp",
-  i1:{src:"projects/fay-logo.webp",alt:"Fay Alghamdi personal logo",fit:"contain",bg:"#fff"},i2:{src:"projects/minecraft-font-detail.webp",alt:"Minecraft Arabic font detail"},tall:{src:"projects/minecraft-font-poster-tall.webp",alt:"Minecraft Arabic font poster",pos:"top center"}}];
+ {name:"LEGO Star Wars Recyclable Packaging",cat:"University — Packaging Design",desc:"A LEGO Star Wars box redesigned to open into a playable diorama and be reused as a desk organizer instead of being thrown away.",link:"lego-starwars-demo.mp4",
+  i1:{src:"lego-starwars-art.webp",alt:"Space illustration printed inside the LEGO box"},i2:{src:"lego-starwars-1.webp",alt:"Opened LEGO box diorama"},tall:{src:"lego-starwars-demo.mp4",video:true,poster:"lego-starwars-2.webp",alt:"Video demo of the packaging"}},
+ {name:"Built for Speed (خُلقت للسرعة)",cat:"University — Editorial / Book Design",desc:"A 48-page Arabic book about iconic supercars — each car gets a line-art cover page, a profile spread, and its exterior and interior design.",link:"book-speed-tall.webp",
+  i1:{src:"book-speed-1.webp",alt:"Book cover"},i2:{src:"book-speed-2.webp",alt:"Bugatti spread"},tall:{src:"book-speed-tall.webp",alt:"Ferrari spread",pos:"right center"}},
+ {name:"Befriend Your Enemy (صادقي عدوك)",cat:"University — Packaging Design",desc:"A Creeper-inspired Minecraft cube package that hides a playful surprise inside, turning a game's villain into a friendly gift.",link:"minecraft-pack-tall.webp",
+  i1:{src:"minecraft-pack-1.webp",alt:"Minecraft cube package"},i2:{src:"minecraft-pack-2.webp",alt:"Package opened"},tall:{src:"minecraft-pack-tall.webp",alt:"Package with its surprise inside"}},
+ {name:"Minecraft Arabic Font & Personal Logo",cat:"University — Typography & Branding",desc:"A pixel-style Arabic typeface inspired by Minecraft blocks, presented as a poster, plus Fay's personal logo.",link:"minecraft-font-poster-tall.webp",
+  i1:{src:"fay-logo.webp",alt:"Fay Alghamdi personal logo",fit:"contain",bg:"#fff"},i2:{src:"minecraft-font-detail.webp",alt:"Minecraft Arabic font detail"},tall:{src:"minecraft-font-poster-tall.webp",alt:"Minecraft Arabic font poster",pos:"top center"}}];
 
 const pad=n=>String(n).padStart(2,"0");
 const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
@@ -183,7 +183,7 @@ document.getElementById("cards").innerHTML=PROJECTS.map((p,i)=>`<div class="cwra
  <div class="grid"><div class="gl">${media(p.i1,"t1")}${media(p.i2,"t2")}</div><div class="gr">${media(p.tall,"tt")}</div></div></div></div>`).join("");
 
 // marquee
-const D=Array.from({length:17},(_,i)=>`drawings/drawing-${pad(i+1)}.webp`);
+const D=Array.from({length:17},(_,i)=>`drawing-${pad(i+1)}.webp`);
 const fill=(id,arr)=>{document.getElementById(id).innerHTML=[...arr,...arr,...arr].map(s=>`<img src="${s}" alt="Digital illustration by Fay" loading="lazy">`).join("")};
 fill("row1",D.slice(0,9));fill("row2",D.slice(9));
 
