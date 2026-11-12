@@ -111,6 +111,37 @@ img,video{display:block}
  .hero h1{font-size:17.5vw}
  .char{width:520px}
 }
+
+/* project modal */
+.lbtn{cursor:pointer;background:none;font-family:inherit}
+.pm{position:fixed;inset:0;z-index:100;background:rgba(1,7,54,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);overflow-y:auto;opacity:0;visibility:hidden;transition:opacity .35s cubic-bezier(.25,.1,.25,1),visibility .35s}
+.pm.open{opacity:1;visibility:visible}
+.pm-in{max-width:1100px;margin:0 auto;padding:72px 20px 80px;transform:translateY(30px);transition:transform .45s cubic-bezier(.25,.1,.25,1)}
+.pm.open .pm-in{transform:none}
+.pm-x{position:fixed;top:16px;right:16px;z-index:101;width:48px;height:48px;border-radius:50%;border:2px solid #D7E2EA;background:rgba(1,7,54,.7);color:#D7E2EA;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s}
+.pm-x:hover{background:rgba(215,226,234,.15)}
+.pm-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:28px}
+.pm-num{font-weight:900;line-height:.9;font-size:clamp(3rem,9vw,120px);flex-shrink:0}
+.pm-cat{color:#D7E2EA;opacity:.6;font-weight:300;text-transform:uppercase;letter-spacing:.05em;font-size:.8rem;margin-bottom:6px}
+.pm-name{color:#D7E2EA;font-weight:500;text-transform:uppercase;line-height:1.15;font-size:clamp(1.3rem,3vw,2.6rem)}
+.pm-about{color:#D7E2EA;font-weight:300;line-height:1.75;font-size:clamp(.95rem,1.5vw,1.2rem);max-width:820px;margin-bottom:40px;opacity:.85}
+.pm-label{color:#D7E2EA;font-weight:500;text-transform:uppercase;letter-spacing:.1em;font-size:.8rem;opacity:.5;margin-bottom:16px}
+.pm-grid{display:grid;grid-template-columns:1fr;gap:16px}
+.pm-grid .it{border-radius:20px;overflow:hidden;background:#0C0C0C;border:1px solid rgba(215,226,234,.15)}
+.pm-grid .it img,.pm-grid .it video{width:100%;height:auto;display:block}
+.pm-grid .it.vid video{max-height:85vh;width:auto;max-width:100%;margin:0 auto}
+@media(min-width:768px){.pm-in{padding:96px 40px 100px}.pm-grid{grid-template-columns:1fr 1fr;gap:20px}.pm-grid .wide{grid-column:1/-1}.pm-x{top:24px;right:24px;width:56px;height:56px}.pm-head{gap:28px}}
+body.lock{overflow:hidden}
+.row img{cursor:zoom-in;transition:transform .3s cubic-bezier(.25,.1,.25,1),filter .3s}
+.row img:hover{transform:scale(1.03);filter:brightness(1.08)}
+.lb{position:fixed;inset:0;z-index:110;background:rgba(1,7,54,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;touch-action:pan-y}
+.lb.open{opacity:1;visibility:visible}
+.lb img{max-width:92vw;max-height:82vh;width:auto;height:auto;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.5);transition:opacity .2s}
+.lb-btn{position:absolute;width:52px;height:52px;border-radius:50%;border:2px solid #D7E2EA;background:rgba(1,7,54,.7);color:#D7E2EA;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s}
+.lb-btn:hover{background:rgba(215,226,234,.15)}
+.lb-x{top:16px;right:16px}.lb-prev{left:16px;top:50%;transform:translateY(-50%)}.lb-next{right:16px;top:50%;transform:translateY(-50%)}
+.lb-count{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#D7E2EA;opacity:.7;font-weight:300;letter-spacing:.1em;font-size:.9rem}
+@media(max-width:640px){.lb-prev,.lb-next{top:auto;bottom:12px;transform:none;width:46px;height:46px}.lb-count{bottom:26px}.lb img{max-height:72vh}}
 </style>
 </head>
 <body>
@@ -149,6 +180,22 @@ img,video{display:block}
   <div class="cards" id="cards"></div>
 </section>
 </main>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Drawing viewer">
+  <button class="lb-btn lb-x" id="lb-x" aria-label="Close"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous drawing"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+  <img id="lb-img" alt="Digital illustration by Fay">
+  <button class="lb-btn lb-next" id="lb-next" aria-label="Next drawing"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+  <div class="lb-count" id="lb-count"></div>
+</div>
+<div class="pm" id="pm" role="dialog" aria-modal="true" aria-labelledby="pm-name">
+  <button class="pm-x" id="pm-x" aria-label="Close"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+  <div class="pm-in">
+    <div class="pm-head"><span class="pm-num grad" id="pm-num"></span><div><div class="pm-cat" id="pm-cat"></div><h3 class="pm-name" id="pm-name"></h3></div></div>
+    <p class="pm-about" id="pm-about"></p>
+    <div class="pm-label">Gallery</div>
+    <div class="pm-grid" id="pm-grid"></div>
+  </div>
+</div>
 
 <script>
 const SERVICES=[
@@ -159,12 +206,20 @@ const SERVICES=[
  ["Digital Illustration","Expressive digital paintings and character illustrations with dramatic lighting, mood, and color."]];
 const PROJECTS=[
  {name:"LEGO Star Wars Recyclable Packaging",cat:"University — Packaging Design",desc:"A LEGO Star Wars box redesigned to open into a playable diorama and be reused as a desk organizer instead of being thrown away.",link:"lego-starwars-demo.mp4",
+  about:"A redesign of a LEGO Star Wars box built around sustainability. Instead of being thrown away after unboxing, the packaging opens into a snowy battle diorama with a hand-illustrated space backdrop, so the set can be displayed and played with — and part of the box is then reused as a desk organizer for pens and small tools. The project went from concept and illustration to a working physical prototype.",
+  gallery:[{src:"lego-starwars-demo.mp4",video:1,poster:"lego-starwars-2.webp"},{src:"lego-starwars-art.webp",wide:1},{src:"lego-starwars-1.webp"},{src:"lego-starwars-3.webp"},{src:"lego-starwars-4.webp"},{src:"lego-starwars-5.webp"}],
   i1:{src:"lego-starwars-art.webp",alt:"Space illustration printed inside the LEGO box"},i2:{src:"lego-starwars-1.webp",alt:"Opened LEGO box diorama"},tall:{src:"lego-starwars-demo.mp4",video:true,poster:"lego-starwars-2.webp",alt:"Video demo of the packaging"}},
  {name:"Built for Speed (خُلقت للسرعة)",cat:"University — Editorial / Book Design",desc:"A 48-page Arabic book about iconic supercars — each car gets a line-art cover page, a profile spread, and its exterior and interior design.",link:"book-speed-tall.webp",
+  about:"خُلقت للسرعة (Built for Speed) is a 48-page Arabic editorial book about ten iconic cars: Ferrari, Porsche, Nissan, Chevrolet, McLaren, Bugatti, Koenigsegg, Kia, Cupra and NIO. Each car gets its own color and opens with a hand-drawn line-art page, followed by a profile spread and pages on its exterior and interior design. The layout pairs bold Arabic typography with large car photography.",
+  gallery:[{src:"book-speed-1.webp",wide:1},{src:"book-speed-3.webp",wide:1},{src:"book-speed-tall.webp",wide:1},{src:"book-speed-4.webp",wide:1},{src:"book-speed-5.webp",wide:1},{src:"book-speed-6.webp",wide:1},{src:"book-speed-7.webp",wide:1},{src:"book-speed-2.webp",wide:1}],
   i1:{src:"book-speed-1.webp",alt:"Book cover"},i2:{src:"book-speed-2.webp",alt:"Bugatti spread"},tall:{src:"book-speed-tall.webp",alt:"Ferrari spread",pos:"right center"}},
  {name:"Befriend Your Enemy (صادقي عدوك)",cat:"University — Packaging Design",desc:"A Creeper-inspired Minecraft cube package that hides a playful surprise inside, turning a game's villain into a friendly gift.",link:"minecraft-pack-tall.webp",
+  about:"صادقي عدوك (Befriend Your Enemy) turns Minecraft's Creeper — the game's most famous villain — into a friendly gift. The cube-shaped box is wrapped in the Creeper's pixel pattern and opens up to reveal a printed, game-themed interior. The project moved from hand sketches, to a chosen concept, to a finished physical package.",
+  gallery:[{src:"minecraft-pack-tall.webp"},{src:"minecraft-pack-1.webp"},{src:"minecraft-pack-2.webp"},{src:"minecraft-pack-sketch-1.webp"},{src:"minecraft-pack-sketch-2.webp"},{src:"minecraft-pack-sketch-3.webp"}],
   i1:{src:"minecraft-pack-1.webp",alt:"Minecraft cube package"},i2:{src:"minecraft-pack-2.webp",alt:"Package opened"},tall:{src:"minecraft-pack-tall.webp",alt:"Package with its surprise inside"}},
  {name:"Minecraft Arabic Font & Personal Logo",cat:"University — Typography & Branding",desc:"A pixel-style Arabic typeface inspired by Minecraft blocks, presented as a poster, plus Fay's personal logo.",link:"minecraft-font-poster-tall.webp",
+  about:"A display Arabic typeface inspired by Minecraft's blocky, pixel-based world. Every letter is built from square units that echo the game's cubes, giving the type a playful, digital identity tied to gaming culture, presented here as a typographic poster. The project also includes Fay's personal logo: her character illustration paired with a hand-lettered wordmark.",
+  gallery:[{src:"minecraft-font-poster-tall.webp"},{src:"fay-logo.webp"},{src:"minecraft-font-detail.webp",wide:1}],
   i1:{src:"fay-logo.webp",alt:"Fay Alghamdi personal logo",fit:"contain",bg:"#fff"},i2:{src:"minecraft-font-detail.webp",alt:"Minecraft Arabic font detail"},tall:{src:"minecraft-font-poster-tall.webp",alt:"Minecraft Arabic font poster",pos:"top center"}}];
 
 const pad=n=>String(n).padStart(2,"0");
@@ -179,12 +234,12 @@ const media=(m,cls)=>{const st=`object-fit:${m.fit||"cover"};object-position:${m
  :`<img class="m ${cls}" src="${m.src}" alt="${esc(m.alt)}" loading="lazy" style="${st}">`};
 document.getElementById("cards").innerHTML=PROJECTS.map((p,i)=>`<div class="cwrap"><div class="card" style="top:${i*28}px">
  <div class="ctop"><div class="cl"><span class="cnum grad">${pad(i+1)}</span><div class="cmeta"><span class="ccat">${esc(p.cat)}</span><h3 class="cname">${esc(p.name)}</h3><p class="cdesc">${esc(p.desc)}</p></div></div>
- <a class="lbtn" href="${p.link}" target="_blank" rel="noopener noreferrer">View Project <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a></div>
+ <button class="lbtn" type="button" data-p="${i}">View Project <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></button></div>
  <div class="grid"><div class="gl">${media(p.i1,"t1")}${media(p.i2,"t2")}</div><div class="gr">${media(p.tall,"tt")}</div></div></div></div>`).join("");
 
 // marquee
 const D=Array.from({length:17},(_,i)=>`drawing-${pad(i+1)}.webp`);
-const fill=(id,arr)=>{document.getElementById(id).innerHTML=[...arr,...arr,...arr].map(s=>`<img src="${s}" alt="Digital illustration by Fay" loading="lazy">`).join("")};
+const fill=(id,arr)=>{document.getElementById(id).innerHTML=[...arr,...arr,...arr].map(s=>`<img src="${s}" data-d="${D.indexOf(s)}" alt="Digital illustration by Fay" loading="lazy">`).join("")};
 fill("row1",D.slice(0,9));fill("row2",D.slice(9));
 
 // animated text
@@ -216,6 +271,35 @@ function onScroll(){const vh=innerHeight;
  cards.forEach((c,i)=>{const target=1-(n-1-i)*0.03;const s0=i/n;const t=cp<=s0?0:(cp-s0)/(1-s0);c.style.transform=`scale(${1+(target-1)*t})`});
 }
 addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onScroll);onScroll();
+
+// project modal
+const pm=document.getElementById("pm");let lastFocus=null;
+function openP(i){const p=PROJECTS[i];lastFocus=document.activeElement;
+ document.getElementById("pm-num").textContent=pad(i+1);document.getElementById("pm-cat").textContent=p.cat;
+ document.getElementById("pm-name").textContent=p.name;document.getElementById("pm-about").textContent=p.about;
+ document.getElementById("pm-grid").innerHTML=p.gallery.map(g=>g.video
+  ?`<div class="it vid wide"><video src="${g.src}" poster="${g.poster}" controls autoplay muted loop playsinline></video></div>`
+  :`<div class="it${g.wide?" wide":""}"><img src="${g.src}" alt="${esc(p.name)}" loading="lazy"></div>`).join("");
+ pm.scrollTop=0;pm.classList.add("open");document.body.classList.add("lock");document.getElementById("pm-x").focus();}
+function closeP(){pm.classList.remove("open");document.body.classList.remove("lock");pm.querySelectorAll("video").forEach(v=>v.pause());setTimeout(()=>{if(!pm.classList.contains("open"))document.getElementById("pm-grid").innerHTML=""},400);lastFocus&&lastFocus.focus();}
+document.querySelectorAll(".lbtn[data-p]").forEach(b=>b.addEventListener("click",()=>openP(+b.dataset.p)));
+document.getElementById("pm-x").addEventListener("click",closeP);
+pm.addEventListener("click",e=>{if(e.target===pm||e.target.classList.contains("pm-in"))closeP()});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&pm.classList.contains("open"))closeP()});
+
+// drawing lightbox
+const lb=document.getElementById("lb"),lbImg=document.getElementById("lb-img");let cur=0,lbFocus=null;
+function showD(i){cur=(i+D.length)%D.length;lbImg.style.opacity=0;lbImg.onload=()=>{lbImg.style.opacity=1};lbImg.src=D[cur];document.getElementById("lb-count").textContent=`${cur+1} / ${D.length}`;}
+function openD(i){lbFocus=document.activeElement;showD(i);lb.classList.add("open");document.body.classList.add("lock");document.getElementById("lb-x").focus();}
+function closeD(){lb.classList.remove("open");document.body.classList.remove("lock");lbFocus&&lbFocus.focus();}
+document.querySelectorAll(".row img").forEach(im=>im.addEventListener("click",()=>openD(+im.dataset.d)));
+document.getElementById("lb-x").addEventListener("click",closeD);
+document.getElementById("lb-prev").addEventListener("click",e=>{e.stopPropagation();showD(cur-1)});
+document.getElementById("lb-next").addEventListener("click",e=>{e.stopPropagation();showD(cur+1)});
+lb.addEventListener("click",e=>{if(e.target===lb)closeD()});
+addEventListener("keydown",e=>{if(!lb.classList.contains("open"))return;if(e.key==="Escape")closeD();if(e.key==="ArrowRight")showD(cur+1);if(e.key==="ArrowLeft")showD(cur-1)});
+let tx=null;lb.addEventListener("touchstart",e=>{tx=e.touches[0].clientX},{passive:true});
+lb.addEventListener("touchend",e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50)showD(cur+(dx<0?1:-1));tx=null},{passive:true});
 </script>
 </body>
 </html>
